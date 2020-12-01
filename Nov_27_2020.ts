@@ -162,11 +162,11 @@ function alternativeProductNoDivision(nums: number[]): number[] {
     }
   }
 
-  const final: number[] = [reverseNums[reverseNums.length - 1]]
+  const final: number[] = [reverseNums[reverseNums.length - 1]];
 
   // Once more to put them together
   for (let i = 1; i < forwardNums.length; i++) {
-      final.push(forwardNums[i - 1] * reverseNums[(forwardNums.length - 1) -i]);
+    final.push(forwardNums[i - 1] * reverseNums[forwardNums.length - 1 - i]);
   }
 
   final.push(forwardNums[forwardNums.length - 1]);
@@ -183,9 +183,8 @@ x[2] * y[0]
 x[3]
 */
 
-
 // [1, 2, 3, 4, 5] = [120, 60, 40, 30, 24]
-console.log(alternativeProductNoDivision([1, 2, 3, 4, 5]));
+//console.log(alternativeProductNoDivision([1, 2, 3, 4, 5]));
 
 /*
 forwardNums (5) [1, 2, 6, 24]
@@ -227,5 +226,38 @@ x[0] * y[2]
 x[1] * y[1]
 x[2] * y[0]
 x[3]
+
+*/
+
+function productNoDivision(nums: number[]): number[] {
+  if (nums.length <= 1) {
+    return nums;
+  }
+
+  const result: number[] = [];
+
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i+1; j < nums.length; j++) {
+      result.push(nums[i] * nums[j]);
+      console.log("result", result);
+    }
+  }
+
+  return [];
+}
+
+console.log(productNoDivision([1, 2, 3, 4]));
+
+/* NOTES AGAIN
+
+n0 = n1 x n2 x n3
+n1 = n0 x n2 x n3
+n2 = n0 x n1 x n3
+n3 = n0 x n1 x n2
+
+We got 
+[n01, n02, n03, n12, n13, n2]
+2,3,4,6,8
+
 
 */
