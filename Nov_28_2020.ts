@@ -46,7 +46,7 @@ function serialize(node: Node2, values = []): string {
 let values = []
 
 function deserialize(val: string): Node2 {
-    const values = val.split(',');
+    values = val.split(',');
     const result = deserializeNode();
     return result;
   }
