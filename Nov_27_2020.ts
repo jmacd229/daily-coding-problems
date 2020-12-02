@@ -236,17 +236,16 @@ function productNoDivision(nums: number[]): number[] {
 
   const result: number[] = [];
 
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i+1; j < nums.length; j++) {
-      result.push(nums[i] * nums[j]);
-      console.log("result", result);
-    }
+  for (let i = 1; i < nums.length; i++) {
+    result.push(nums[i] * nums[i-1]);
+    console.log('result', result);
   }
 
   return [];
 }
 
-console.log(productNoDivision([1, 2, 3, 4]));
+console.log(productNoDivision([1,2,3,4]));
+
 
 /* NOTES AGAIN
 
@@ -256,8 +255,49 @@ n2 = n0 x n1 x n3
 n3 = n0 x n1 x n2
 
 We got 
-[n01, n02, n03, n12, n13, n2]
-2,3,4,6,8
+[n01, n12, n23]
 
+We need
+[n123,     n023,     n013,     n012]
+n12 x n3   n23 x n0  n01 x n3  n01 x n2
+n23 x n1                       n12 x n0
+
+Therefore we can acheive all final numbers with just n0 and n3
+
+What about a bigger case?
+
+n0 = n1 x n2 x n3 x n4 x n5
+n1 = n0 x n2 x n3 x n4 x n5
+n2 = n0 x n1 x n3 x n4 x n5
+n3 = n0 x n1 x n2 x n4 x n5
+n4 = n0 x n1 x n2 x n3 x n5
+n5 = n0 x n1 x n2 x n3 x n4
+
+We get 
+[n01, n12, n23, n34, n45]
+
+We need
+[n12345,        n02345,         n01345,         n01245,         n01235,         n01234]
+n12-n34 x n5    n23-n45 x n0    n01-n34 x n5    n01-n45 x n2    n01-n23 x n5    n01-n23 x n4
+n12-n45 x n4                    n01-n45 x n3    n12-n45 x n0                    n01-n34 x n2
+n23-n45 x n1                                                                    n12-n34 x n0
+
+Therefore there is still a path to the final with just n0 and n5
+
+and on an odd case?
+
+n0 = n1 x n2 x n3 x n4
+n1 = n0 x n2 x n3 x n4
+n2 = n0 x n1 x n3 x n4
+n3 = n0 x n1 x n2 x n4
+n4 = n0 x n1 x n2 x n3
+
+
+We get 
+[n01, n12, n23, n34]
+
+We need
+[n1234,        n0234,           n0134,         n0124,         n0123]
+n12-n34        n23 x n4 x n0    n01-n34        n12 x n0 x n4  n01-n23
 
 */
