@@ -1,6 +1,8 @@
-/**
+/** https://leetcode.com/problems/squares-of-a-sorted-array/submissions/
  * @param {number[]} nums
  * @return {number[]}
+ * 
+ * Would have been smarter to work from the outside of the array inwards
  */
 var sortedSquares = function (nums) {
 	let rightIndex = nums.findIndex(num => num >= 0);
