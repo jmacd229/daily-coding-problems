@@ -13,9 +13,11 @@ const find_max_cpu_load = function (jobs) {
 	const processEnds = [];
 	for (let i = 0; i < jobs.length; i++) {
 		currentCpu += jobs[i].cpu_load;
+		// Remove any processes that have completed processing
 		while (processEnds.length && jobs[i].start >= processEnds[processEnds.length - 1].end) {
 			currentCpu -= processEnds.pop().cpu_load;
 		}
+		// Either add to the start or end of our list so that we can keep track of the ending processes
 		if (processEnds.length === 0 || processEnds[processEnds.length - 1].end <= jobs[i].end) {
 			processEnds.push(jobs[i]);
 		} else if (processEnds[processEnds.length - 1].end > jobs[i].end) {

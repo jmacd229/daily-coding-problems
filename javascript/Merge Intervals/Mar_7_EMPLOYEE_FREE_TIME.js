@@ -16,17 +16,12 @@ class Interval {
 
 const find_employee_free_time = function (schedule) {
 	let result = [];
+	// Flatten the schedules and sort them by starting times
 	schedule = schedule.flatMap(sched => sched).sort((a, b) => a.start - b.start);
-	for (let i = 0; i < schedule.length - 1;) {
-		if (schedule[i].end >= schedule[i + 1].start) {
-			if (schedule[i].end > schedule[i + 1].end) {
-				schedule.splice(i, 2, new Interval(schedule[i].start, schedule[i].end));
-			} else {
-				schedule.splice(i, 2, new Interval(schedule[i].start, schedule[i + 1].end));
-			}
-		} else {
+	for (let i = 0; i < schedule.length - 1; i++) {
+		if (schedule[i].end < schedule[i + 1].start) {
+			// Push any gaps we find within the schedules
 			result.push(new Interval(schedule[i].end, schedule[i + 1].start));
-			i++;
 		}
 	}
 	return result;
